@@ -18,11 +18,12 @@ def main(input, output, sigma):
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("input", type=str, required=True)
-    parser.add_argument("--sigma", type=float, required=True)
+    parser.add_argument("input", type=str)
+    parser.add_argument("--sigma1", type=float, required=True)
+    parser.add_argument("--sigma2", type=float, required=True)
 
     args = parser.parse_args()
-    noisy_1 = main(args.input, args.sigma)
-    noisy_2 = main(args.input, 2*args.sigma)
+    noisy_1 = main(args.input, args.sigma1)
+    noisy_2 = main(args.input, 2*args.sigma2)
     imageio.imwrite("output_0.png", noisy_1)
     imageio.imwrite("output_1.png", noisy_2)

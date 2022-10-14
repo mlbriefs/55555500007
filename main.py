@@ -1,5 +1,5 @@
 import os
-import iio
+import imageio
 import numpy as np
 
 # if you need to access a file next to the source code, use the variable ROOT
@@ -8,19 +8,21 @@ import numpy as np
 ROOT = os.path.dirname(os.path.realpath(__file__))
 
 def main(input, output, sigma):
-    u = iio.read(input)
+    u = imageio.read(input)
     print("hello world", u.shape)
 
     v = u + np.random.randn(*u.shape) * sigma
 
-    iio.write(output, v)
+    imageio.ims(output, v)
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input", type=str, required=True)
+    parser.add_argument("input", type=str, required=True)
     parser.add_argument("--sigma", type=float, required=True)
-    parser.add_argument("--output", type=str, required=True)
 
     args = parser.parse_args()
-    main(args.input, args.output, args.sigma)
+    noisy_1 = main(args.input, args.sigma)
+    noisy_2 = main(args.input, 2*args.sigma)
+    imageio.imwrite("output_0.png", noisy_1)
+    imageio.imwrite("output_1.png", noisy_2)
